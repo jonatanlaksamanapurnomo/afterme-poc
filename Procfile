@@ -1,1 +1,1 @@
-ENV_SILENT=true npm run server
+web: ENV_SILENT=true npm run server
