@@ -57,7 +57,15 @@ app.use(express.static(path.resolve(__dirname, './build')));
 
 app.get('*', function(request, response) {
     const filePath = path.resolve(__dirname, './build', 'index.html');
-    response.sendFile(filePath);
+    fs.readFile(filePath, 'utf8', function (err,data) {
+        if (err) {
+            return console.log(err);
+        }
+        data = data.replace(/\$OG_TITLE/g, 'The After Me Network');
+        data = data.replace(/\$OG_DESCRIPTION/g, "Leave messages for loved ones once you've passed away.");
+        result = data.replace(/\$OG_IMAGE/g, SAMPLE_IMAGE);
+        response.send(result);
+    });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
